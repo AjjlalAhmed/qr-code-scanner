@@ -23,7 +23,7 @@ export default {
       qrScanner.start();
     };
 
-    return { stream, startScanning, stopScanning };
+    return { stream, startScanning,  };
   },
 };
 </script>
