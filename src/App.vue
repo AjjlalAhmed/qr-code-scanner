@@ -1,7 +1,7 @@
 <template>
   <h1>Qr scanner prototype</h1>
   <video class="stream" width="300" height="300" ref="stream"></video>
-  <div class="btn">
+  <div class="btns">
     <button class="start" @click="startScanning">Start scanning</button>
     <button class="stop" @click="stopScanning">Stop scanning</button>
   </div>
@@ -10,13 +10,17 @@
 <script>
 import QrScanner from "qr-scanner";
 import { ref } from "@vue/reactivity";
+import { onMounted } from "@vue/runtime-core";
 export default {
   name: "App",
   setup() {
     const stream = ref(null);
-    const qrScanner = new QrScanner(stream.value, (result) =>
-      console.log("decoded qr code:", result)
-    );
+    const qrScanner = ref(null);
+    onMounted(() => {
+      qrScanner.value = new QrScanner(stream.value, (result) =>
+        console.log("decoded qr code:", result)
+      );
+    });
     const startScanning = () => {
       qrScanner.start();
     };
@@ -56,7 +60,7 @@ h1 {
   font-size: 1.5rem;
   color: white;
 }
-.stop{
+.stop {
   background: crimson;
 }
 </style>
