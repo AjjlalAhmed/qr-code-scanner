@@ -3,7 +3,7 @@
   <video class="stream" width="300" height="300" ref="stream"></video>
   <div class="btn">
     <button class="start" @click="startScanning">Start scanning</button>
-    <button class="stop" @click="startScanning">Stop scanning</button>
+    <button class="stop" @click="stopScanning">Stop scanning</button>
   </div>
 </template>
 
@@ -20,10 +20,10 @@ export default {
     const startScanning = () => {
       qrScanner.start();
     };
-    const startScanning = () => {
+    const stopScanning = () => {
       qrScanner.stop();
     };
-    return { stream, startScanning, startScanning };
+    return { stream, startScanning, stopScanning };
   },
 };
 </script>
