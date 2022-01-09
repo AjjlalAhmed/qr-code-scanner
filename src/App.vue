@@ -1,6 +1,7 @@
 <template>
   <h1>Qr scanner prototype</h1>
-  <video ref="stream"></video>
+  <video class="stream" width="300" height="300" ref="stream"></video>
+  <button class="start">Start</button>
 </template>
 
 <script>
@@ -11,13 +12,13 @@ export default {
   name: "App",
   setup() {
     const stream = ref(null);
-    onMounted(() => {
+    const startScaning = () => {
       const qrScanner = new QrScanner(stream.value, (result) =>
         console.log("decoded qr code:", result)
       );
       qrScanner.start();
-    });
-    return { stream };
+    };
+    return { stream, startScaning };
   },
 };
 </script>
@@ -28,5 +29,19 @@ h1 {
   text-align: center;
   padding: 20px;
   font-family: monospace;
+}
+.stream {
+  border: 0px;
+  border-radius: 5px;
+}
+.start {
+  width: 90%;
+  margin: 20px auto;
+  background: dodgerblue;
+  border: 0px;
+  border-radius: 5px;
+  text-transform: capitalize;
+  font-size: 1.5rem;
+  color: white;
 }
 </style>
