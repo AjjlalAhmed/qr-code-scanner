@@ -3,30 +3,24 @@
   <video class="stream" width="300" height="300" ref="stream"></video>
   <div class="btns">
     <button class="start" @click="startScanning">Start scanning</button>
-    <button class="stop" @click="stopScanning">Stop scanning</button>
   </div>
 </template>
 
 <script>
 import QrScanner from "qr-scanner";
 import { ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
 export default {
   name: "App",
   setup() {
     const stream = ref(null);
-    const qrScanner = ref(null);
-    onMounted(() => {
-      qrScanner.value = new QrScanner(stream.value, (result) =>
+
+    const startScanning = () => {
+      const qrScanner = new QrScanner(stream.value, (result) =>
         console.log("decoded qr code:", result)
       );
-    });
-    const startScanning = () => {
       qrScanner.start();
     };
-    const stopScanning = () => {
-      qrScanner.stop();
-    };
+
     return { stream, startScanning, stopScanning };
   },
 };
@@ -59,8 +53,5 @@ h1 {
   text-transform: capitalize;
   font-size: 1.5rem;
   color: white;
-}
-.stop {
-  background: crimson;
 }
 </style>
