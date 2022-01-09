@@ -4,6 +4,7 @@
   <div class="btns">
     <button class="start" @click="startScanning">Start scanning</button>
   </div>
+  <div class="result">{{ result }}</div>
 </template>
 
 <script>
@@ -13,10 +14,11 @@ export default {
   name: "App",
   setup() {
     const stream = ref(null);
-
+    const result = ref(null);
     const startScanning = () => {
-      const qrScanner = new QrScanner(stream.value, (result) =>
-        console.log("decoded qr code:", result)
+      const qrScanner = new QrScanner(
+        stream.value,
+        (data) => (result.value = data)
       );
       qrScanner.start();
     };
