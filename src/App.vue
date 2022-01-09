@@ -1,6 +1,8 @@
 <template>
   <h1>Qr scanner prototype</h1>
-  <video class="stream" ref="stream"></video>
+  <div class="container">
+    <video class="stream" ref="stream"></video>
+  </div>
   <div class="btns">
     <button class="start" @click="startScanning">Start scanning</button>
   </div>
@@ -35,21 +37,24 @@ export default {
 h1 {
   font-size: 2em;
   text-align: center;
-  padding: 20px;
+  padding: 10px;
   font-family: monospace;
 }
 p {
   font-size: 1.2em;
   text-align: center;
-  padding: 10px;
   font-family: monospace;
 }
-.stream {
-  border: 0px;
-  border-radius: 5px;
-  width: 350px;
-  height: 350px;
+.container{
+  width: 90%;
   margin: 10px auto;
+}
+.stream {
+  border: 1px solid #2222;
+  border-radius: 5px;
+  width: 100%;
+  height: 350px;
+
 }
 .btns {
   display: flex;
