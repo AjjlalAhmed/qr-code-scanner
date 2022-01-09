@@ -1,13 +1,12 @@
 <template>
   <h1>Qr scanner prototype</h1>
   <video class="stream" width="300" height="300" ref="stream"></video>
-  <button class="start">Start</button>
+  <button class="start" @click="startScaning">Start</button>
 </template>
 
 <script>
 import QrScanner from "qr-scanner";
 import { ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
 export default {
   name: "App",
   setup() {
@@ -35,8 +34,9 @@ h1 {
   border-radius: 5px;
 }
 .start {
-  width: 90%;
-  margin: 20px auto;
+  width: 100%;
+  margin: 20px ;
+  padding: 10px;
   background: dodgerblue;
   border: 0px;
   border-radius: 5px;
