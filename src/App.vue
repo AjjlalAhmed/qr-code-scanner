@@ -23,7 +23,7 @@ export default {
       qrScanner.start();
     };
 
-    return { stream, startScanning, stopScanning, result };
+    return { stream, startScanning, result };
   },
 };
 </script>
@@ -38,6 +38,7 @@ h1 {
 .stream {
   border: 0px;
   border-radius: 5px;
+  width: 90%;
   margin: 0 auto;
 }
 .btns {
