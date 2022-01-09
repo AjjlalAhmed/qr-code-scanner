@@ -39,17 +39,17 @@ h1 {
   font-family: monospace;
 }
 p {
-  font-size: 1em;
+  font-size: 1.2em;
   text-align: center;
-  padding: 50px;
+  padding: 10px;
   font-family: monospace;
 }
 .stream {
   border: 0px;
   border-radius: 5px;
-  width: 90%;
-  margin: 10px auto;
+  width: 350px;
   height: 350px;
+  margin: 10px auto;
 }
 .btns {
   display: flex;
