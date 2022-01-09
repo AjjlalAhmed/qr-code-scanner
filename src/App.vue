@@ -16,14 +16,14 @@ export default {
     const stream = ref(null);
     const result = ref(null);
     const startScanning = () => {
-      const qrScanner = new QrScanner(
-        stream.value,
-        (data) => (result.value = data)
-      );
+      const qrScanner = new QrScanner(stream.value, (data) => {
+        result.value = data;
+        qrScanner.stop();
+      });
       qrScanner.start();
     };
 
-    return { stream, startScanning,  };
+    return { stream, startScanning, stopScanning, result };
   },
 };
 </script>
