@@ -1,7 +1,10 @@
 <template>
   <h1>Qr scanner prototype</h1>
   <video class="stream" width="300" height="300" ref="stream"></video>
-  <button class="start" @click="startScaning">Start</button>
+  <div class="btn">
+    <button class="start" @click="startScanning">Start scanning</button>
+    <button class="stop" @click="startScanning">Stop scanning</button>
+  </div>
 </template>
 
 <script>
@@ -11,13 +14,16 @@ export default {
   name: "App",
   setup() {
     const stream = ref(null);
-    const startScaning = () => {
-      const qrScanner = new QrScanner(stream.value, (result) =>
-        console.log("decoded qr code:", result)
-      );
+    const qrScanner = new QrScanner(stream.value, (result) =>
+      console.log("decoded qr code:", result)
+    );
+    const startScanning = () => {
       qrScanner.start();
     };
-    return { stream, startScaning };
+    const startScanning = () => {
+      qrScanner.stop();
+    };
+    return { stream, startScanning, startScanning };
   },
 };
 </script>
@@ -32,10 +38,16 @@ h1 {
 .stream {
   border: 0px;
   border-radius: 5px;
+  margin: 0 auto;
 }
-.start {
+.btns {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+.btns > button {
   width: 100%;
-  margin: 20px ;
   padding: 10px;
   background: dodgerblue;
   border: 0px;
@@ -43,5 +55,8 @@ h1 {
   text-transform: capitalize;
   font-size: 1.5rem;
   color: white;
+}
+.stop{
+  background: crimson;
 }
 </style>
