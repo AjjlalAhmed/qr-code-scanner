@@ -1,10 +1,13 @@
 <template>
   <h1>Qr scanner prototype</h1>
-  <video class="stream" width="300" height="300" ref="stream"></video>
+  <video class="stream" ref="stream"></video>
   <div class="btns">
     <button class="start" @click="startScanning">Start scanning</button>
   </div>
-  <div class="result">{{ result }}</div>
+  <div class="result">
+    <h1>Result</h1>
+    <p>{{ result }}</p>
+  </div>
 </template>
 
 <script>
@@ -35,11 +38,18 @@ h1 {
   padding: 20px;
   font-family: monospace;
 }
+p {
+  font-size: 1em;
+  text-align: center;
+  padding: 50px;
+  font-family: monospace;
+}
 .stream {
   border: 0px;
   border-radius: 5px;
   width: 90%;
-  margin: 0 auto;
+  margin: 10px auto;
+  height: 350px;
 }
 .btns {
   display: flex;
