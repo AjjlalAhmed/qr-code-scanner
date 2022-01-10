@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import QrScanner from "qr-scanner";
-QrScanner.WORKER_PATH = "../node_modules/qr-scanner/qr-scanner-worker.min.js";
+import QrScanner from "./assets/js/qr-scanner";
+QrScanner.WORKER_PATH = "./assets/js/qr-scanner.worker";
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 export default {
