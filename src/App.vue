@@ -47,12 +47,12 @@ export default {
     onMounted(() => {
       video.value = document.querySelector(".video");
       canvas.value = document.createElement("canvas");
-      ctx.value = canvas.getContext("2d");
+      ctx.value = canvas.value.getContext("2d");
     });
 
     const tick = (data) => {
-      ctx.clearRect(0, 0, 400, 400);
-      ctx.drawImage(video.value, 0, 0, 400, 400);
+      ctx.value.clearRect(0, 0, 400, 400);
+      ctx.value.drawImage(video.value, 0, 0, 400, 400);
       var data = ctx.getImageData(0, 0, 400, 400).data;
       const code = jsQR(data, width, height);
 
