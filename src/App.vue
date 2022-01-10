@@ -53,7 +53,9 @@ export default {
         .then((result) => (qrResult.value = result))
         .catch((error) => {
           qrError.value = error;
-          requestAnimationFrame(tick);
+          setInterval(() => {
+            requestAnimationFrame(tick);
+          }, 2000);
         });
     };
 
