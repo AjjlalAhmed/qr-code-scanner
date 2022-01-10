@@ -23,7 +23,7 @@
       v-if="showCanvas"
       ref="canvasElement"
     ></canvas>
-
+    <video class="video"></video>
     <div id="output" v-if="showCanvas">
       <div v-if="!outputData">No QR code detected.</div>
       <div v-else>
@@ -54,7 +54,7 @@ export default {
     const canvasElement = ref(null);
 
     onMounted(() => {
-      video.value = document.createElement("video");
+      video.value = document.querySelector(".video");
     });
 
     const tick = () => {
