@@ -48,7 +48,7 @@ export default {
       let image_data_url = canvas.toDataURL("image/jpeg");
       console.log(image_data_url);
       qrResult.value = image_data_url;
-       requestAnimationFrame(tick);
+      requestAnimationFrame(tick);
     };
 
     const startScanning = async () => {
@@ -61,6 +61,7 @@ export default {
         audio: false,
       });
       stream.value.srcObject = streamData;
+        stream.value.play();
       requestAnimationFrame(tick);
     };
     return { stream, startScanning, qrResult, qrError };
