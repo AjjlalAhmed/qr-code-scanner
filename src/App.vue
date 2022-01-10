@@ -88,12 +88,14 @@ export default {
     };
 
     const openScan = () => {
-      navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-        video.value.srcObject = stream;
-        video.value.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-        video.value.play();
-        requestAnimationFrame(tick);
-      });
+      navigator.mediaDevices
+        .getUserMedia({ video: { facingMode: "environment" } })
+        .then((stream) => {
+          video.value.srcObject = stream;
+          video.value.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+          video.value.play();
+          requestAnimationFrame(tick);
+        });
     };
 
     return {
