@@ -8,7 +8,7 @@
   </div>
   <div class="result">
     <h1>Result</h1>
-    <div >{{qrResult}}</div>
+    <div>{{ qrResult }}</div>
   </div>
   <div class="result">
     <h1>Error</h1>
@@ -20,7 +20,7 @@
 import QrScanner from "./assets/js/qr-scanner.min.js";
 QrScanner.WORKER_PATH = "./assets/js/qr-scanner-worker.min.js";
 import { ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
+// import { onMounted } from "@vue/runtime-core";
 export default {
   name: "App",
   setup() {
