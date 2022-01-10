@@ -62,8 +62,7 @@ export default {
         showCanvas.value = true;
         canvasHeight.value = video.value.videoHeight;
         canvasWidth.value = video.value.videoWidth;
-        !canvas2d.value &&
-          (canvas2d.value = canvasHeight.value.getContext("2d"));
+        canvas2d.value = canvasElement.value.getContext("2d");
         canvas2d.value.drawImage(
           video.value,
           0,
@@ -71,7 +70,7 @@ export default {
           canvasWidth.value,
           canvasHeight.value
         );
-        var imageData = canvas2d.value.getImageData(
+        const imageData = canvas2d.value.getImageData(
           0,
           0,
           canvasWidth.value,
@@ -81,7 +80,7 @@ export default {
           inversionAttempts: "dontInvert",
         });
         console.log(code);
-        prompt(JSON.stringify(code))
+        prompt(JSON.stringify(code));
         if (code) video.value.srcObject = null;
         if (code) showCanvas.value = false;
         if (code) outputData.value = code;
