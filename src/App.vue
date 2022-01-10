@@ -56,7 +56,7 @@ export default {
           QrScanner.scanImage(file)
             .then((result) => (qrResult.value = result))
             .catch((error) => {
-              qrError.value = error + count;
+              qrError.value = error + file;
               requestAnimationFrame(tick);
             });
         });
