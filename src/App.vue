@@ -16,14 +16,7 @@
   </div> -->
   <div class="jsqr">
     <h1>Qr scanner prototype</h1>
-    <canvas
-      :width="canvasWidth"
-      :height="canvasHeight"
-      id="canvas"
-      v-if="showCanvas"
-      ref="canvasElement"
-    ></canvas>
-    <video class="video"></video>
+    <video width="300" height="300" class="video"></video>
     <div id="output" v-if="showCanvas">
       <div v-if="!outputData">No QR code detected.</div>
       <div v-else>
@@ -47,64 +40,45 @@ export default {
   setup() {
     const video = ref(null);
     const showCanvas = ref(false);
-    const canvas2d = ref(undefined);
     const outputData = ref(undefined);
-    const canvasWidth = ref(320);
-    const canvasHeight = ref(480);
-    const canvasElement = ref(null);
+    const canvas = ref(null);
+    const ctx = ref(null);
 
     onMounted(() => {
       video.value = document.querySelector(".video");
+      canvas.value = document.createElement("canvas");
+      ctx.value = canvas.getContext("2d");
     });
 
-    const tick = () => {
-      if (video.value.readyState === video.value.HAVE_ENOUGH_DATA) {
-        showCanvas.value = true;
-        canvasHeight.value = video.value.videoHeight;
-        canvasWidth.value = video.value.videoWidth;
-        canvas2d.value = canvasElement.value.getContext("2d");
-        canvas2d.value.drawImage(
-          video.value,
-          0,
-          0,
-          canvasWidth.value,
-          canvasHeight.value
-        );
-        const imageData = canvas2d.value.getImageData(
-          0,
-          0,
-          canvasWidth.value,
-          canvasHeight.value
-        );
-        var code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: "dontInvert",
-        });
-        console.log(code);
-        prompt(JSON.stringify(code));
-        if (code) video.value.srcObject = null;
-        if (code) showCanvas.value = false;
-        if (code) outputData.value = code;
+    const tick = (data) => {
+      ctx.clearRect(0, 0, 400, 400);
+      ctx.drawImage(video.value, 0, 0, 400, 400);
+      var data = ctx.getImageData(0, 0, 400, 400).data;
+      const code = jsQR(data, width, height);
+
+      if (code) {
+        console.log("Found QR code", code);
       }
-      requestAnimationFrame(tick);
     };
 
     const openScan = () => {
       navigator.mediaDevices
-        .getUserMedia({ video: { facingMode: "environment" } })
+        .getUserMedia({
+          audio: false,
+          video: {
+            facingMode: "environment",
+          },
+        })
         .then((stream) => {
           video.value.srcObject = stream;
-          video.value.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-          video.value.play();
           requestAnimationFrame(tick);
-        });
+        })
+        .catch(console.error);
     };
 
     return {
       openScan,
       showCanvas,
-      canvasWidth,
-      canvasHeight,
-      canvasElement,
       outputData,
     };
 
