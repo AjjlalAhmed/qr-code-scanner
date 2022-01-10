@@ -41,6 +41,7 @@ export default {
     // });
 
     const tick = () => {
+      prompt("123")
       canvas
         .getContext("2d")
         .drawImage(video, 0, 0, canvas.width, canvas.height);
