@@ -29,20 +29,36 @@ export default {
     const qrError = ref(null);
     const scanner = ref(null);
     const hasCamera = ref(false);
-    onMounted(async () => {
-      hasCamera.value = await QrScanner.hasCamera();
-      if (!hasCamera.value) return (qrError.value = "Camera not found");
-      const videoTag = document.querySelector(".stream");
-      scanner.value = new QrScanner(
-        videoTag,
-        (result) => (qrResult.value = result),
-        (error) => (qrError.value = error)
-      );
-    });
+    // onMounted(async () => {
+    //   hasCamera.value = await QrScanner.hasCamera();
+    //   if (!hasCamera.value) return (qrError.value = "Camera not found");
+    //   const videoTag = document.querySelector(".stream");
+    //   scanner.value = new QrScanner(
+    //     videoTag,
+    //     (result) => (qrResult.value = result),
+    //     (error) => (qrError.value = error)
+    //   );
+    // });
+
+    const tick = () => {
+      canvas
+        .getContext("2d")
+        .drawImage(video, 0, 0, canvas.width, canvas.height);
+      let image_data_url = canvas.toDataURL("image/jpeg");
+      console.log(image_data_url);
+    };
+
     const startScanning = async () => {
-      if (!hasCamera.value)
-        return alert("This device does not have any camera");
-      await scanner.value.start();
+      // if (!hasCamera.value)
+      //   return alert("This device does not have any camera");
+      // await scanner.value.start();
+
+      let streamData = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+        audio: false,
+      });
+      video.srcObject = streamData;
+      requestAnimationFrame(tick);
     };
     return { stream, startScanning, qrResult, qrError };
   },
