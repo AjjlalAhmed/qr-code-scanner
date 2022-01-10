@@ -32,8 +32,9 @@ export default {
     onMounted(async () => {
       hasCamera.value = await QrScanner.hasCamera();
       if (!hasCamera.value) return (qrError.value = "Camera not found");
+      const videoTag = document.querySelector(".stream")
       scanner.value = new QrScanner(
-        stream.value,
+        videoTag,
         (result) => (qrResult.value = result),
         (error) => (qrError.value = error)
       );
