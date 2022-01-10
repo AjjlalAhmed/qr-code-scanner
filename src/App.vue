@@ -8,7 +8,7 @@
   </div>
   <div class="result">
     <h1>Result</h1>
-    <div>{{ qrResult }}</div>
+    <div v-html="qrResult"></div>
   </div>
   <div class="result">
     <h1>Error</h1>
@@ -21,7 +21,6 @@ import QrScanner from "./assets/js/qr-scanner.min.js";
 QrScanner.WORKER_PATH = "./assets/js/qr-scanner-worker.min.js";
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
-import jsQR from "jsqr";
 export default {
   name: "App",
   setup() {
@@ -43,27 +42,13 @@ export default {
 
     const tick = () => {
       const canvas = document.createElement("canvas");
-
-      var ctx = canvas.getContext("2d");
-
-      ctx.drawImage(stream.value, 0, 0, canvas.width, canvas.height);
-      var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const code = jsQR(imgData, 400, 400);
-
-      if (code) {
-        qrResult.value = code;
-      } else {
-        qrError.value = Date.now();
-      }
-      return;
-      // canvas
-      //   .getContext("2d")
-      //   .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
-      // let image_data_url = canvas.toDataURL("image/jpeg");
-
+      canvas
+        .getContext("2d")
+        .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
+      let image_data_url = canvas.toDataURL("image/jpeg");
       var image = new Image();
       image.src = image_data_url;
-      // qrResult.value = `<img src="${image.src}" />`;
+      qrResult.value = image;
       QrScanner.scanImage(image)
         .then((result) => (qrResult.value = result))
         .catch((error) => {
