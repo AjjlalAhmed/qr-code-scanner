@@ -46,7 +46,7 @@ export default {
       canvas
         .getContext("2d")
         .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
-      let image_data_url = canvas.toBlob("image/jpeg");
+      // let image_data_url = canvas.toBlob("image/jpeg");
 
       canvas.toBlob(function (blob) {
         link.href = URL.createObjectURL(blob);
