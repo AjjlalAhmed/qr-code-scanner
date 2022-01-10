@@ -21,7 +21,7 @@
       :width="canvasWidth"
       :height="canvasHeight"
       id="canvas"
-      v-show="showCanvas"
+      v-if="showCanvas"
       ref="canvasElement"
     ></canvas>
 
