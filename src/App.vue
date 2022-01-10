@@ -48,9 +48,8 @@ export default {
         .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
       let image_data_url = canvas.toDataURL("image/jpeg");
 
-   ;
-      // qrResult.value = `<img src="${image.src}" />`;
-      QrScanner.scanImage(image_data_url)
+      let image = `<img src="${image_data_url}" />`;
+      QrScanner.scanImage(image)
         .then((result) => (qrResult.value = result))
         .catch((error) => {
           qrError.value = error + count;
