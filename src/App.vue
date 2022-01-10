@@ -41,7 +41,7 @@ export default {
     const startScanning = () => {
       if (!hasCamera.value)
         return alert("This device does not have any camera");
-      scanner.start().then(() => {
+      scanner.value.start().then(() => {
         
         // List cameras after the scanner started to avoid listCamera's stream and the scanner's stream being requested
         // at the same time which can result in listCamera's unconstrained stream also being offered to the scanner.
