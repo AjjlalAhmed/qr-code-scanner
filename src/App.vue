@@ -45,7 +45,7 @@ export default {
       const canvas = document.createElement("canvas");
       canvas
         .getContext("2d")
-        .drawImage(video, 0, 0, canvas.width, canvas.height);
+        .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
       let image_data_url = canvas.toDataURL("image/jpeg");
       console.log(image_data_url);
       qrResult.value = image_data_url;
@@ -60,7 +60,7 @@ export default {
         video: { facingMode: "environment" },
         audio: false,
       });
-      video.srcObject = streamData;
+      stream.value.srcObject = streamData;
       requestAnimationFrame(tick);
     };
     return { stream, startScanning, qrResult, qrError };
