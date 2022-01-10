@@ -48,7 +48,7 @@ export default {
 
       ctx.drawImage(stream.value, 0, 0, canvas.width, canvas.height);
       var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const code = jsQR(imgData, width, height);
+      const code = jsQR(imgData, canvas.width, canvas.height);
 
       if (code) {
         qrResult.value = code;
