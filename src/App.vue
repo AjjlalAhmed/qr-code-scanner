@@ -39,15 +39,16 @@ export default {
     //     (error) => (qrError.value = error)
     //   );
     // });
-
+    let count = 0
     const tick = () => {
+      count++
       const canvas = document.createElement("canvas");
       canvas
         .getContext("2d")
         .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
       let image_data_url = canvas.toDataURL("image/jpeg");
-      console.log(image_data_url);
-      qrResult.value = image_data_url;
+
+      qrResult.value = count;
       requestAnimationFrame(tick);
     };
 
@@ -61,7 +62,7 @@ export default {
         audio: false,
       });
       stream.value.srcObject = streamData;
-        stream.value.play();
+      stream.value.play();
       requestAnimationFrame(tick);
     };
     return { stream, startScanning, qrResult, qrError };
