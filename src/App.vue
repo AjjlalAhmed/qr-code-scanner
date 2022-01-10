@@ -49,18 +49,14 @@ export default {
       let image_data_url = canvas.toDataURL("image/jpeg");
       // var image = new Image();
       // image.src = image_data_url;
-      fetch(image_data_url)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const file = new File([blob], `${Date.now().toString()}`, { type: "image/png" });
-          QrScanner.scanImage(file)
-            .then((result) => (qrResult.value = result))
-            .catch((error) => {
-              qrError.value = error + file.name;
-              requestAnimationFrame(tick);
-            });
-        });
+      var blob = dataURItoBlob(image_data_url);
       // qrResult.value = `<img src="${image.src}" />`;
+      QrScanner.scanImage(blob)
+        .then((result) => (qrResult.value = result))
+        .catch((error) => {
+          qrError.value = error + count;
+          requestAnimationFrame(tick);
+        });
     };
 
     const startScanning = async () => {
