@@ -49,10 +49,7 @@ export default {
         // start the scanner earlier.
         QrScanner.listCameras(true).then((cameras) =>
           cameras.forEach((camera) => {
-            const option = document.createElement("option");
-            option.value = camera.id;
-            option.text = camera.label;
-            camList.add(option);
+           
           })
         );
       });
