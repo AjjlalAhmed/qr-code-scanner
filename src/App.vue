@@ -41,6 +41,7 @@
 // QrScanner.WORKER_PATH = "./assets/js/qr-scanner.worker";
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
+import adapter from "webrtc-adapter";
 import jsQR from "jsqr";
 export default {
   name: "App",
