@@ -70,6 +70,7 @@ export default {
         })
         .then((streamData) => {
           stream.value.srcObject = streamData;
+          requestAnimationFrame(tick);
         });
 
       // stream.value.play();
