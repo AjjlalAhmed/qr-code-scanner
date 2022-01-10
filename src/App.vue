@@ -83,6 +83,7 @@ export default {
         console.log(code);
         if (code) video.value.srcObject = null;
         if (code) showCanvas.value = false;
+        if (code) outputData = code;
       }
       requestAnimationFrame(tick);
     };
