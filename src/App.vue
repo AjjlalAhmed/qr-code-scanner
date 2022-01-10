@@ -48,14 +48,21 @@ export default {
         .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
       let image_data_url = canvas.toBlob("image/jpeg");
 
-      // let image = document.createElement("img");
-      // image.src = image_data_url
-      QrScanner.scanImage(image_data_url)
+      canvas.toBlob(function (blob) {
+        link.href = URL.createObjectURL(blob);
+        console.log(blob);
+        console.log(link.href); // this line should be here
+         QrScanner.scanImage(blob)
         .then((result) => (qrResult.value = result))
         .catch((error) => {
           qrError.value = error + count;
           requestAnimationFrame(tick);
         });
+      }, "image/png");
+
+      // let image = document.createElement("img");
+      // image.src = image_data_url
+     
     };
 
     const startScanning = async () => {
