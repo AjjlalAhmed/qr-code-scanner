@@ -8,27 +8,36 @@
   </div>
   <div class="result">
     <h1>Result</h1>
-    <p>{{ result }}</p>
+    <p>{{ qrResult }}</p>
+  </div>
+  <div class="result">
+    <h1>Error</h1>
+    <p>{{ qrError }}</p>
   </div>
 </template>
 
 <script>
 import QrScanner from "qr-scanner";
 import { ref } from "@vue/reactivity";
+import { onMounted } from "@vue/runtime-core";
 export default {
   name: "App",
   setup() {
     const stream = ref(null);
-    const result = ref(null);
-    const startScanning = () => {
-      const qrScanner = new QrScanner(stream.value, (data) => {
-        result.value = data;
-        qrScanner.stop();
-      });
-      qrScanner.start();
-    };
+    const qrResult = ref(null);
+    const qrError = ref(null);
+    const scanner = ref(null);
+    onMounted(() => {
+      if (!QrScanner.hasCamera()) return (qrError.value = "Camera not found");
+      scanner.value = new QrScanner(
+        stream.value,
+        (result) => (qrResult.value = result),
+        (error) => (qrError.value = error)
+      );
+    });
+    const startScanning = () => {};
 
-    return { stream, startScanning, result };
+    return { stream, startScanning, qrResult, qrError };
   },
 };
 </script>
@@ -45,7 +54,7 @@ p {
   text-align: center;
   font-family: monospace;
 }
-.container{
+.container {
   width: 90%;
   margin: 10px auto;
 }
@@ -53,8 +62,7 @@ p {
   border: 1px solid #2222;
   border-radius: 5px;
   width: 100%;
-  height: 350px;
-
+  height: 200px;
 }
 .btns {
   display: flex;
