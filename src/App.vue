@@ -41,7 +41,6 @@ export default {
     // });
 
     const tick = () => {
-      prompt("123");
       const canvas = document.createElement("canvas");
       canvas
         .getContext("2d")
@@ -49,6 +48,7 @@ export default {
       let image_data_url = canvas.toDataURL("image/jpeg");
       console.log(image_data_url);
       qrResult.value = image_data_url;
+       requestAnimationFrame(tick);
     };
 
     const startScanning = async () => {
