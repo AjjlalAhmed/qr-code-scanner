@@ -41,7 +41,7 @@ export default {
     const startScanning = () => {
       if (!hasCamera.value)
         return alert("This device does not have any camera");
-      scanner.start();
+      scanner.value.start();
     };
 
     return { stream, startScanning, qrResult, qrError };
