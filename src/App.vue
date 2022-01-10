@@ -18,6 +18,7 @@
 
 <script>
 import QrScanner from "qr-scanner";
+QrScanner.WORKER_PATH = "../node_modules/qr-scanner/qr-scanner-worker.min.js";
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 export default {
@@ -27,15 +28,20 @@ export default {
     const qrResult = ref(null);
     const qrError = ref(null);
     const scanner = ref(null);
-    onMounted(() => {
-      if (!QrScanner.hasCamera()) return (qrError.value = "Camera not found");
+    const hasCamera = ref(false);
+    onMounted(async () => {
+      hasCamera.value = await QrScanner.hasCamera();
+      if (!hasCamera.value) return (qrError.value = "Camera not found");
       scanner.value = new QrScanner(
         stream.value,
         (result) => (qrResult.value = result),
         (error) => (qrError.value = error)
       );
     });
-    const startScanning = () => {};
+    const startScanning = () => {
+      if (!hasCamera.value)
+        return alert("This device does not have any camera");
+    };
 
     return { stream, startScanning, qrResult, qrError };
   },
@@ -44,7 +50,7 @@ export default {
 
 <style>
 h1 {
-  font-size: 2em;
+  font-size: 1.5em;
   text-align: center;
   padding: 10px;
   font-family: monospace;
@@ -53,6 +59,10 @@ p {
   font-size: 1.2em;
   text-align: center;
   font-family: monospace;
+  border: 1px solid #2222;
+  min-height: 20px;
+  padding: 10px;
+  margin: 0px 20px;
 }
 .container {
   width: 90%;
