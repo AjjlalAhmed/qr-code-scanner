@@ -52,11 +52,11 @@ export default {
       fetch(image_data_url)
         .then((res) => res.blob())
         .then((blob) => {
-          const file = new File([blob], "File name", { type: "image/png" });
+          const file = new File([blob], `${Date.now().toString()}`, { type: "image/png" });
           QrScanner.scanImage(file)
             .then((result) => (qrResult.value = result))
             .catch((error) => {
-              qrError.value = error + file;
+              qrError.value = error + file.name;
               requestAnimationFrame(tick);
             });
         });
