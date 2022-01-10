@@ -48,10 +48,13 @@ export default {
       let image_data_url = canvas.toDataURL("image/jpeg");
       var image = new Image();
       image.src = image_data_url;
-      qrResult.value = `<img src="${image.src}" />`;
-      setInterval(() => {
-        requestAnimationFrame(tick);
-      }, 5000);
+      // qrResult.value = `<img src="${image.src}" />`;
+      QrScanner.scanImage(image)
+        .then((result) => (qrResult.value = result))
+        .catch((error) => {
+          qrError.value = error;
+          requestAnimationFrame(tick);
+        });
     };
 
     const startScanning = async () => {
