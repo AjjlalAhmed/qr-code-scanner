@@ -16,7 +16,6 @@
   </div> -->
   <div class="jsqr">
     <h1>Qr scanner prototype</h1>
-    c
     <canvas
       :width="canvasWidth"
       :height="canvasHeight"
