@@ -8,7 +8,7 @@
   </div>
   <div class="result">
     <h1>Result</h1>
-    <div v-html="qrResult"></div>
+    <div >{{qrResult}}</div>
   </div>
   <div class="result">
     <h1>Error</h1>
