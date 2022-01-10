@@ -81,9 +81,10 @@ export default {
           inversionAttempts: "dontInvert",
         });
         console.log(code);
+        prompt(JSON.stringify(code))
         if (code) video.value.srcObject = null;
         if (code) showCanvas.value = false;
-        if (code) outputData = code;
+        if (code) outputData.value = code;
       }
       requestAnimationFrame(tick);
     };
