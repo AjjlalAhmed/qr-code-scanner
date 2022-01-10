@@ -58,14 +58,22 @@ export default {
       // if (!hasCamera.value)
       //   return alert("This device does not have any camera");
       // await scanner.value.start();
+      stream.value.style.width = document.width + "px";
+      stream.value.style.height = document.height + "px";
+      stream.value.setAttribute("autoplay", "");
+      stream.value.setAttribute("muted", "");
+      stream.value.setAttribute("playsinline", "");
+      navigator.mediaDevices
+        .getUserMedia({
+          audio: false,
+          video: { facingMode: "environment" },
+        })
+        .then((streamData) => {
+          stream.value.srcObject = streamData;
+        });
 
-      let streamData = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "environment" },
-        audio: false,
-      });
-      stream.value.srcObject = streamData;
-      stream.value.play();
-      requestAnimationFrame(tick);
+      // stream.value.play();
+      // requestAnimationFrame(tick);
     };
     return { stream, startScanning, qrResult, qrError };
   },
