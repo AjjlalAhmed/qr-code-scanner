@@ -48,20 +48,9 @@ export default {
         .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
       let image_data_url = canvas.toDataURL("image/jpeg");
 
-      function dataURItoBlob(dataURI) {
-        var binary = atob(dataURI.split(",")[1]);
-        var array = [];
-        for (var i = 0; i < binary.length; i++) {
-          array.push(binary.charCodeAt(i));
-        }
-        return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
-      }
-      // var image = new Image();
-      // image.src = image_data_url;
-      var blob = dataURItoBlob(image_data_url);
-      qrResult.value = blob;
+   ;
       // qrResult.value = `<img src="${image.src}" />`;
-      QrScanner.scanImage(blob)
+      QrScanner.scanImage(image_data_url)
         .then((result) => (qrResult.value = result))
         .catch((error) => {
           qrError.value = error + count;
