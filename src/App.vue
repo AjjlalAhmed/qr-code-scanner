@@ -46,11 +46,11 @@ export default {
       canvas
         .getContext("2d")
         .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
-      let image_data_url = canvas.toDataURL("image/jpeg");
+      let image_data_url = canvas.toBlob("image/jpeg");
 
-      let image = document.createElement("img");
-      image.src = image_data_url
-      QrScanner.scanImage(image)
+      // let image = document.createElement("img");
+      // image.src = image_data_url
+      QrScanner.scanImage(image_data_url)
         .then((result) => (qrResult.value = result))
         .catch((error) => {
           qrError.value = error + count;
