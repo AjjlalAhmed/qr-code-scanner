@@ -47,15 +47,20 @@ export default {
         .getContext("2d")
         .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
       let image_data_url = canvas.toDataURL("image/jpeg");
-      var image = new Image();
-      image.src = image_data_url;
-      // qrResult.value = `<img src="${image.src}" />`;
-      QrScanner.scanImage(image)
-        .then((result) => (qrResult.value = result))
-        .catch((error) => {
-          qrError.value = error + count;
-          requestAnimationFrame(tick);
+      // var image = new Image();
+      // image.src = image_data_url;
+      fetch(image_data_url)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = new File([blob], "File name", { type: "image/png" });
+          QrScanner.scanImage(file)
+            .then((result) => (qrResult.value = result))
+            .catch((error) => {
+              qrError.value = error + count;
+              requestAnimationFrame(tick);
+            });
         });
+      // qrResult.value = `<img src="${image.src}" />`;
     };
 
     const startScanning = async () => {
