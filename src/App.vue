@@ -8,7 +8,7 @@
   </div>
   <div class="result">
     <h1>Result</h1>
-    <div v-html="qrResult"></div>
+    <div>{{ qrResult }}</div>
   </div>
   <div class="result">
     <h1>Error</h1>
@@ -20,7 +20,8 @@
 import QrScanner from "./assets/js/qr-scanner.min.js";
 QrScanner.WORKER_PATH = "./assets/js/qr-scanner-worker.min.js";
 import { ref } from "@vue/reactivity";
-// import { onMounted } from "@vue/runtime-core";
+import { onMounted } from "@vue/runtime-core";
+import jsQR from "jsqr";
 export default {
   name: "App",
   setup() {
@@ -39,30 +40,36 @@ export default {
     //     (error) => (qrError.value = error)
     //   );
     // });
-    let count = 0;
-    const tick = () => {
-      count++;
-      const canvas = document.createElement("canvas");
-      canvas
-        .getContext("2d")
-        .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
-      // let image_data_url = canvas.toBlob("image/jpeg");
 
-      canvas.toBlob(function (blob) {
-        link.href = URL.createObjectURL(blob);
-        console.log(blob);
-        console.log(link.href); // this line should be here
-         QrScanner.scanImage(blob)
+    const tick = () => {
+      const canvas = document.createElement("canvas");
+
+      var ctx = canvas.getContext("2d");
+
+      ctx.drawImage(stream.value, 0, 0, canvas.width, canvas.height);
+      var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imgData, width, height);
+
+      if (code) {
+        qrResult.value = code;
+      } else {
+        qrError.value = Date.now();
+      }
+      return;
+      // canvas
+      //   .getContext("2d")
+      //   .drawImage(stream.value, 0, 0, canvas.width, canvas.height);
+      // let image_data_url = canvas.toDataURL("image/jpeg");
+
+      var image = new Image();
+      image.src = image_data_url;
+      // qrResult.value = `<img src="${image.src}" />`;
+      QrScanner.scanImage(image)
         .then((result) => (qrResult.value = result))
         .catch((error) => {
-          qrError.value = error + count;
+          qrError.value = error;
           requestAnimationFrame(tick);
         });
-      }, "image/png");
-
-      // let image = document.createElement("img");
-      // image.src = image_data_url
-     
     };
 
     const startScanning = async () => {
