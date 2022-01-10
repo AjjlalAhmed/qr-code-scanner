@@ -16,7 +16,7 @@
   </div> -->
   <div class="jsqr">
     <h1>Qr scanner prototype</h1>
-
+    c
     <canvas
       :width="canvasWidth"
       :height="canvasHeight"
@@ -85,7 +85,7 @@ export default {
         if (code) video.value.srcObject = null;
         if (code) showCanvas.value = false;
       }
-      requestAnimationFrame(tick());
+      requestAnimationFrame(tick);
     };
 
     const openScan = () => {
@@ -93,7 +93,7 @@ export default {
         video.value.srcObject = stream;
         video.value.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
         video.value.play();
-        requestAnimationFrame(tick());
+        requestAnimationFrame(tick);
       });
     };
 
