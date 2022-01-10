@@ -39,8 +39,9 @@ export default {
     //     (error) => (qrError.value = error)
     //   );
     // });
-
+    let count = 0;
     const tick = () => {
+      count++;
       const canvas = document.createElement("canvas");
       canvas
         .getContext("2d")
@@ -52,7 +53,7 @@ export default {
       QrScanner.scanImage(image)
         .then((result) => (qrResult.value = result))
         .catch((error) => {
-          qrError.value = error;
+          qrError.value = error + count;
           requestAnimationFrame(tick);
         });
     };
