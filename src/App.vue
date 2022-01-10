@@ -8,7 +8,7 @@
   </div>
   <div class="result">
     <h1>Result</h1>
-    <div>{{ qrResult }}</div>
+    <div v-html="qrResult"></div>
   </div>
   <div class="result">
     <h1>Error</h1>
@@ -70,6 +70,7 @@ export default {
       // var image = new Image();
       // image.src = image_data_url;
       var blob = dataURItoBlob(image_data_url);
+      qrResult.value = blob
       // qrResult.value = `<img src="${image.src}" />`;
       QrScanner.scanImage(blob)
         .then((result) => (qrResult.value = result))
