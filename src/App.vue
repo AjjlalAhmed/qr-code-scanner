@@ -22,11 +22,11 @@ export default {
         })
         .then(function (stream) {
           if (stream.getVideoTracks().length > 0) {
-            const video = document.querySelector("#stream");
-            video.setAttribute("autoplay", "");
-            video.setAttribute("muted", "");
-            video.setAttribute("playsinline", "");
-            video.srcObject = stream;
+            // const video = document.querySelector("#stream");
+            // video.setAttribute("autoplay", "");
+            // video.setAttribute("muted", "");
+            // video.setAttribute("playsinline", "");
+            // video.srcObject = stream;
             html5QrCode.value = new Html5Qrcode("reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
               result.value = decodedResult;
