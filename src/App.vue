@@ -20,23 +20,17 @@ export default {
           if (stream.getVideoTracks().length > 0) {
             html5QrCode.value = new Html5Qrcode("reader");
 
-            Html5Qrcode
-              .getCameras()
+            Html5Qrcode.getCameras()
               .then((devices) => {
-                /**
-                 * devices would be an array of objects of type:
-                 * { id: "id", label: "label" }
-                 */
-                result.value = devices
                 if (devices && devices.length) {
                   var cameraId = devices[0].id;
-                  result.value = devices.length
+                  result.value = devices;
                   // .. use this to start scanning.
                 }
               })
               .catch((err) => {
                 // handle err
-                result.value = err
+                result.value = err;
               });
 
             // html5QrCode.value
