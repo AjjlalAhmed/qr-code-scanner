@@ -38,7 +38,7 @@ export default {
                       result.value = errorMessage;
                     }
                   );
-                  result.value = devices;
+               
                   // .. use this to start scanning.
                 }
               })
@@ -46,9 +46,7 @@ export default {
                 // handle err
                 result.value = err;
               })
-              .catch((err) => {
-                result.value = err;
-              });
+             
 
             // html5QrCode.value
             //   .start(
