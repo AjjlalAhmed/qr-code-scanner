@@ -1,6 +1,7 @@
 <template>
   <h1>Qr scanner prototype</h1>
   <div id="reader" width="600px"></div>
+  <p class="result">{{}}</p>
 </template>
 
 <script>
@@ -10,6 +11,7 @@ import { onMounted } from "@vue/runtime-core";
 export default {
   name: "App",
   setup() {
+    const result = ref(null);
     onMounted(() => {
       let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader",
@@ -21,13 +23,16 @@ export default {
     function onScanSuccess(decodedText, decodedResult) {
       // handle the scanned code as you like, for example:
       console.log(`Code matched = ${decodedText}`, decodedResult);
+      result.value = decodedResult
     }
 
     function onScanFailure(error) {
       // handle scan failure, usually better to ignore and keep scanning.
       // for example:
       console.warn(`Code scan error = ${error}`);
+      result.value = error
     }
+    return { result };
   },
 };
 </script>
