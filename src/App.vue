@@ -5,34 +5,54 @@
 </template>
 
 <script>
-import { Html5QrcodeScanner } from "html5-qrcode";
+import { Html5QrcodeScanner, Html5Qrcode } from "html5-qrcode";
 import { onMounted, ref } from "@vue/runtime-core";
 
 export default {
   name: "App",
   setup() {
     const result = ref(null);
-
+    const html5QrCode = ref(null);
     onMounted(() => {
-      let html5QrcodeScanner = new Html5QrcodeScanner(
-        "reader",
-        { fps: 10, qrbox: { width: 250, height: 250 } },
-        /* verbose= */ false
-      );
-      html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+      navigator.mediaDevices
+        .getUserMedia({ audio: true, video: true })
+        .then(function (stream) {
+          if (stream.getVideoTracks().length > 0) {
+            html5QrCode.value = new Html5Qrcode(
+              "reader",
+              { fps: 10, qrbox: { width: 250, height: 250 } },
+              /* verbose= */ false
+            );
+          }
+        })
+        .catch(function (error) {
+          if (error.message == "Requested device not found") {
+            alert("No camera founded");
+            console.log(error.message);
+          }
+        });
     });
-    function onScanSuccess(decodedText, decodedResult) {
-      // handle the scanned code as you like, for example:
-      console.log(`Code matched = ${decodedText}`, decodedResult);
-      result.value = decodedResult;
-    }
 
-    function onScanFailure(error) {
-      // handle scan failure, usually better to ignore and keep scanning.
-      // for example:
-      console.warn(`Code scan error = ${error}`);
-      result.value = error;
-    }
+    // onMounted(() => {
+    //   let html5QrcodeScanner = new Html5QrcodeScanner(
+    //     "reader",
+    //     { fps: 10, qrbox: { width: 250, height: 250 } },
+    //     /* verbose= */ false
+    //   );
+    //   html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    // });
+    // function onScanSuccess(decodedText, decodedResult) {
+    //   // handle the scanned code as you like, for example:
+    //   console.log(`Code matched = ${decodedText}`, decodedResult);
+    //   result.value = decodedResult;
+    // }
+
+    // function onScanFailure(error) {
+    //   // handle scan failure, usually better to ignore and keep scanning.
+    //   // for example:
+    //   console.warn(`Code scan error = ${error}`);
+    //   result.value = error;
+    // }
     return { result };
   },
 };
