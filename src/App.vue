@@ -27,6 +27,7 @@ export default {
                  * devices would be an array of objects of type:
                  * { id: "id", label: "label" }
                  */
+                result.value = devices
                 if (devices && devices.length) {
                   var cameraId = devices[0].id;
                   result.value = cameraId
@@ -35,6 +36,7 @@ export default {
               })
               .catch((err) => {
                 // handle err
+                result.value = err
               });
 
             // html5QrCode.value
