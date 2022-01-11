@@ -18,11 +18,24 @@ export default {
         .getUserMedia({ audio: true, video: true })
         .then(function (stream) {
           if (stream.getVideoTracks().length > 0) {
-            html5QrCode.value = new Html5Qrcode(
-              "reader",
-              { fps: 10, qrbox: { width: 250, height: 250 } },
-              /* verbose= */ false
-            );
+            html5QrCode.value = new Html5Qrcode("reader");
+            html5QrCode
+              .start(
+                cameraId,
+                {
+                  fps: 10, // Optional, frame per seconds for qr code scanning
+                  qrbox: { width: 250, height: 250 }, // Optional, if you want bounded box UI
+                },
+                (decodedText, decodedResult) => {
+                  result.value = decodedResult;
+                },
+                (errorMessage) => {
+                  result.value = errorMessage;
+                }
+              )
+              .catch((err) => {
+                result.value = err;
+              });
           }
         })
         .catch(function (error) {
