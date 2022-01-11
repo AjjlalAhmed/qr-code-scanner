@@ -1,8 +1,11 @@
 <template>
   <h1>Qr-scanner prototype</h1>
-  <div id="reader" width="600px"></div>
-  <video width="200" height="200" id="stream"></video>
-  <p class="result">{{ result }}</p>
+  <div id="reader" width="400px" style="min-height: 50vh"></div>
+  <p class="result">
+    Logs :
+    <br />
+    <span>{{ result }}</span>
+  </p>
 </template>
 
 <script>
@@ -22,14 +25,9 @@ export default {
         })
         .then(function (stream) {
           if (stream.getVideoTracks().length > 0) {
-            // const video = document.querySelector("#stream");
-            // video.setAttribute("autoplay", "");
-            // video.setAttribute("muted", "");
-            // video.setAttribute("playsinline", "");
-            // video.srcObject = stream;
             html5QrCode.value = new Html5Qrcode("reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-              result.value = decodedResult;
+              result.value = decodedText;
             };
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
             html5QrCode.value.start(
@@ -40,24 +38,6 @@ export default {
                 result.value = error;
               }
             );
-
-            // html5QrCode.value
-            //   .start(
-            //     cameraId,
-            //     {
-            //       fps: 10, // Optional, frame per seconds for qr code scanning
-            //       qrbox: { width: 250, height: 250 }, // Optional, if you want bounded box UI
-            //     },
-            //     (decodedText, decodedResult) => {
-            //       result.value = decodedResult;
-            //     },
-            //     (errorMessage) => {
-            //       result.value = errorMessage;
-            //     }
-            //   )
-            //   .catch((err) => {
-            //     result.value = err;
-            //   });
           }
         })
         .catch(function (error) {
@@ -68,29 +48,32 @@ export default {
         });
     });
 
-    // onMounted(() => {
-    //   let html5QrcodeScanner = new Html5QrcodeScanner(
-    //     "reader",
-    //     { fps: 10, qrbox: { width: 250, height: 250 } },
-    //     /* verbose= */ false
-    //   );
-    //   html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-    // });
-    // function onScanSuccess(decodedText, decodedResult) {
-    //   // handle the scanned code as you like, for example:
-    //   console.log(`Code matched = ${decodedText}`, decodedResult);
-    //   result.value = decodedResult;
-    // }
-
-    // function onScanFailure(error) {
-    //   // handle scan failure, usually better to ignore and keep scanning.
-    //   // for example:
-    //   console.warn(`Code scan error = ${error}`);
-    //   result.value = error;
-    // }
     return { result };
   },
 };
 </script>
 
-<style></style>
+<style>
+* {
+  padding: 0;
+  margin: 0;
+}
+h1 {
+  font-size: 1.5rem;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-align: center;
+  background: dodgerblue;
+  color: #fff;
+  padding: 10px;
+  text-transform: capitalize;
+}
+P {
+  font-size: 1.5rem;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  padding: 10px;
+}
+span {
+  font-size: 1rem;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+</style>
