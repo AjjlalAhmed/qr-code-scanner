@@ -19,34 +19,15 @@ export default {
         .then(function (stream) {
           if (stream.getVideoTracks().length > 0) {
             html5QrCode.value = new Html5Qrcode("reader");
-
-            Html5Qrcode.getCameras()
-              .then((devices) => {
-                if (devices && devices.length) {
-                  var cameraId = devices[devices.length - 1].id;
-                  result.value = cameraId
-                  html5QrCode.value.start(
-                    cameraId,
-                    {
-                      fps: 10, // Optional, frame per seconds for qr code scanning
-                      qrbox: { width: 250, height: 250 }, // Optional, if you want bounded box UI
-                    },
-                    (decodedText, decodedResult) => {
-                      result.value = decodedResult;
-                    },
-                    (errorMessage) => {
-                      result.value = errorMessage;
-                    }
-                  );
-               
-                  // .. use this to start scanning.
-                }
-              })
-              .catch((err) => {
-                // handle err
-                result.value = err;
-              })
-             
+            const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+              result.value = decodedResult;
+            };
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            html5QrCode.value.start(
+              { facingMode: "environment" },
+              config,
+              qrCodeSuccessCallback
+            );
 
             // html5QrCode.value
             //   .start(
