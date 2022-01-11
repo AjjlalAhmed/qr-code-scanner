@@ -19,7 +19,7 @@ export default {
         .then(function (stream) {
           if (stream.getVideoTracks().length > 0) {
             html5QrCode.value = new Html5Qrcode("reader");
-            html5QrCode
+            html5QrCode.value
               .start(
                 cameraId,
                 {
