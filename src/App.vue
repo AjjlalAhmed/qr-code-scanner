@@ -23,7 +23,7 @@ export default {
             video.setAttribute("autoplay", "");
             video.setAttribute("muted", "");
             video.setAttribute("playsinline", "");
-            video.src = stream;
+            video.srcObject  = stream;
             html5QrCode.value = new Html5Qrcode("reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
               result.value = decodedResult;
