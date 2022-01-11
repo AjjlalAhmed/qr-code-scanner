@@ -15,7 +15,7 @@ export default {
     const html5QrCode = ref(null);
     onMounted(() => {
       navigator.mediaDevices
-        .getUserMedia({ audio: true, video: true })
+        .getUserMedia({ audio: false, video: true })
         .then(function (stream) {
           if (stream.getVideoTracks().length > 0) {
             html5QrCode.value = new Html5Qrcode("reader");
@@ -23,7 +23,6 @@ export default {
               result.value = decodedResult;
             };
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-
             html5QrCode.value.start(
               { facingMode: { exact: "environment" } },
               config,
