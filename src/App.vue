@@ -19,7 +19,7 @@ export default {
         .getUserMedia({ audio: false, video: true })
         .then(function (stream) {
           if (stream.getVideoTracks().length > 0) {
-            video = document.querySelector("#stream");
+            const video = document.querySelector("#stream");
             video.setAttribute("autoplay", "");
             video.setAttribute("muted", "");
             video.setAttribute("playsinline", "");
