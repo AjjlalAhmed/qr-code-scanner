@@ -19,23 +19,41 @@ export default {
         .then(function (stream) {
           if (stream.getVideoTracks().length > 0) {
             html5QrCode.value = new Html5Qrcode("reader");
-            html5QrCode.value
-              .start(
-                cameraId,
-                {
-                  fps: 10, // Optional, frame per seconds for qr code scanning
-                  qrbox: { width: 250, height: 250 }, // Optional, if you want bounded box UI
-                },
-                (decodedText, decodedResult) => {
-                  result.value = decodedResult;
-                },
-                (errorMessage) => {
-                  result.value = errorMessage;
+
+            Html5Qrcode.value
+              .getCameras()
+              .then((devices) => {
+                /**
+                 * devices would be an array of objects of type:
+                 * { id: "id", label: "label" }
+                 */
+                if (devices && devices.length) {
+                  var cameraId = devices[0].id;
+                  result.value = cameraId
+                  // .. use this to start scanning.
                 }
-              )
+              })
               .catch((err) => {
-                result.value = err;
+                // handle err
               });
+
+            // html5QrCode.value
+            //   .start(
+            //     cameraId,
+            //     {
+            //       fps: 10, // Optional, frame per seconds for qr code scanning
+            //       qrbox: { width: 250, height: 250 }, // Optional, if you want bounded box UI
+            //     },
+            //     (decodedText, decodedResult) => {
+            //       result.value = decodedResult;
+            //     },
+            //     (errorMessage) => {
+            //       result.value = errorMessage;
+            //     }
+            //   )
+            //   .catch((err) => {
+            //     result.value = err;
+            //   });
           }
         })
         .catch(function (error) {
