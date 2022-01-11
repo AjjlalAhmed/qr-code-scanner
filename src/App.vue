@@ -1,7 +1,7 @@
 <template>
-  <h1>Qr scanner prototype</h1>
+  <h1>Qr-scanner prototype</h1>
   <div id="reader" width="600px"></div>
-  <p class="result">{{}}</p>
+  <p class="result">{{ result }}</p>
 </template>
 
 <script>
