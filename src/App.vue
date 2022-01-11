@@ -20,7 +20,7 @@ export default {
           if (stream.getVideoTracks().length > 0) {
             html5QrCode.value = new Html5Qrcode("reader");
 
-            Html5Qrcode.value
+            Html5Qrcode
               .getCameras()
               .then((devices) => {
                 /**
