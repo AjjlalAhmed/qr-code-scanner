@@ -1,6 +1,7 @@
 <template>
   <h1>Qr-scanner prototype</h1>
   <div id="reader" width="600px"></div>
+  <video width="200" height="200" id="stream"></video>
   <p class="result">{{ result }}</p>
 </template>
 
@@ -18,6 +19,11 @@ export default {
         .getUserMedia({ audio: false, video: true })
         .then(function (stream) {
           if (stream.getVideoTracks().length > 0) {
+            video = document.querySelector("#stream");
+            video.setAttribute("autoplay", "");
+            video.setAttribute("muted", "");
+            video.setAttribute("playsinline", "");
+            video.src = stream;
             html5QrCode.value = new Html5Qrcode("reader");
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
               result.value = decodedResult;
