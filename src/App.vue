@@ -26,7 +26,10 @@ export default {
             html5QrCode.value.start(
               { facingMode: "environment" },
               config,
-              qrCodeSuccessCallback
+              qrCodeSuccessCallback,
+              (error) => {
+                result.value = error;
+              }
             );
 
             // html5QrCode.value
