@@ -24,12 +24,28 @@ export default {
               .then((devices) => {
                 if (devices && devices.length) {
                   var cameraId = devices[0].id;
+                  html5QrCode.value.start(
+                    { facingMode: { exact: "environment" } },
+                    {
+                      fps: 10, // Optional, frame per seconds for qr code scanning
+                      qrbox: { width: 250, height: 250 }, // Optional, if you want bounded box UI
+                    },
+                    (decodedText, decodedResult) => {
+                      result.value = decodedResult;
+                    },
+                    (errorMessage) => {
+                      result.value = errorMessage;
+                    }
+                  );
                   result.value = devices;
                   // .. use this to start scanning.
                 }
               })
               .catch((err) => {
                 // handle err
+                result.value = err;
+              })
+              .catch((err) => {
                 result.value = err;
               });
 
