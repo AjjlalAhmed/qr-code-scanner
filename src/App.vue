@@ -24,6 +24,7 @@ export default {
               .then((devices) => {
                 if (devices && devices.length) {
                   var cameraId = devices[devices.length - 1].id;
+                  result.value = cameraId
                   html5QrCode.value.start(
                     cameraId,
                     {
