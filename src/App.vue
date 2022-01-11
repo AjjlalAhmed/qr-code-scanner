@@ -23,9 +23,9 @@ export default {
             Html5Qrcode.getCameras()
               .then((devices) => {
                 if (devices && devices.length) {
-                  var cameraId = devices[0].id;
+                  var cameraId = devices[devices.length - 1].id;
                   html5QrCode.value.start(
-                    { facingMode: { exact: "environment" } },
+                    cameraId,
                     {
                       fps: 10, // Optional, frame per seconds for qr code scanning
                       qrbox: { width: 250, height: 250 }, // Optional, if you want bounded box UI
