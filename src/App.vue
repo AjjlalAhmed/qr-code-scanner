@@ -30,7 +30,7 @@ export default {
                 result.value = devices
                 if (devices && devices.length) {
                   var cameraId = devices[0].id;
-                  result.value = cameraId
+                  result.value = devices.length
                   // .. use this to start scanning.
                 }
               })
