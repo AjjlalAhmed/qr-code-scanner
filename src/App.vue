@@ -23,8 +23,9 @@ export default {
               result.value = decodedResult;
             };
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
             html5QrCode.value.start(
-              { facingMode: "environment" },
+              { facingMode: { exact: "environment" } },
               config,
               qrCodeSuccessCallback,
               (error) => {
